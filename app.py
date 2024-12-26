@@ -2,18 +2,21 @@ import random
 import streamlit as st
 import pandas as pd
 import os
+from io import StringIO, BytesIO
+
+from docx import Document
+
+from temp import add_to_docx
 
 # 获取当前脚本的目录
 script_dir = os.path.dirname(os.path.abspath(__file__))
 
 # 加载数据
 data = pd.read_json(os.path.join(script_dir, "tiku.json"))
-with open(os.path.join(script_dir, "worse_list.csv"), "r", encoding="gbk", errors="replace") as f:
+with open(os.path.join(script_dir, "worse_list.csv"), "r", encoding="utf-8", errors="replace") as f:
     data1 = f.read()
 # 再用 Pandas 读取内容
-from io import StringIO
-worse_list = pd.read_csv(StringIO(data1))
-
+worse_list = pd.read_csv(StringIO(data1), encoding="utf-8")
 # 初始化会话状态
 if "submit" not in st.session_state:
     st.session_state.submit = False
@@ -21,7 +24,7 @@ if "selected_page" not in st.session_state:
     st.session_state.selected_page = "随机题目"
 if "worse" not in st.session_state:
     if not worse_list.empty:
-        st.session_state.worse = worse_list["题号"].values.to_list()
+        st.session_state.worse = worse_list.to_dict("records")
     else:
         st.session_state.worse = []
 
@@ -32,6 +35,7 @@ if "user_choice" not in st.session_state:
 if "search_query" not in st.session_state:
     st.session_state.search_query = 1
 
+
 # 设置页面配置
 st.set_page_config(page_title="2024毛概题库选择题", layout="wide", page_icon="🏫")
 
@@ -40,7 +44,7 @@ st.title("2024毛概题库选择题")
 
 # 侧边栏菜单
 with st.sidebar:
-    menu = ["随机题目", "选看某题", "错题集"]
+    menu = ["随机题目", "选看某题", "错题集", "下载"]
 
     # 使用 st.radio，并通过标题为空字符串隐藏框框
     selected_page = st.selectbox("在这选择页面~", menu)
@@ -49,10 +53,10 @@ with st.sidebar:
 
     st.markdown("---\n**祝各位毛概选择都全对！！！**   \n- 觉得好可以到[github](https://github.com/TryLoess/maogai)上给我点个小星星哇~    \n- 有bug或者建议可以到github提issue或者发邮件到2624680754@qq.com   \n")
 
+
 # 定义加载新题目的函数
 def load_new_question(random_mode=True):
     if random_mode:
-        print(data)
         random_id = random.choice(data["题号"].unique())  # 随机选择一个题号
     else:
         # 用于“选看某题”模式，按顺序或特定逻辑加载题目
@@ -199,12 +203,49 @@ elif selected_page == "错题集":
     st.header("错题集")
     if st.session_state.worse:
         worse_df = pd.DataFrame(st.session_state.worse)
+        print("worse:", worse_df)
         st.dataframe(worse_df)
-        # if st.button("保存错题集"):
-        #     worse_df.to_csv("worse_list.csv", index=False)
+
+        print("错题集导出")
+        doc = Document()
+        worse_df["选项"] = worse_df["选项"].apply(lambda x: eval(x))
+        worse_df.apply(lambda x: add_to_docx(x, doc), axis=1)
+        buffer = BytesIO()
+        doc.save(buffer)
+        buffer.seek(0)  # 重置缓冲区的位置
+
+        for par in doc.paragraphs:
+            print(par.text)
+        # 下载按钮
+        if st.download_button(
+            label="下载错题集",
+            data=buffer,
+            file_name="错题集.docx",
+            mime="application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+        ):
+            st.info("等待一小会自动下载")
     else:
         st.info("您的错题集目前为空。")
-
+elif selected_page == "下载":
+    with open(os.path.join(script_dir, "output.docx"), "rb") as file:
+        file_data = file.read()
+    with open(os.path.join(script_dir, "output.pdf"), "rb") as file:
+        file_pdf = file.read()
+    st.download_button(
+        label=f"下载word版题库",
+        data=file_data,
+        file_name="题库.docx",
+        mime="application/vnd.openxmlformats-officedocument.wordprocessingml.document",  # MIME 类型
+    )
+    st.download_button(
+        label=f"下载pdf版题库",
+        data=file_pdf,
+        file_name="题库.pdf",
+        mime="application/pdf")
+    st.markdown("""请注意：   
+- word版题库为**所有题目文字**的整合   
+- pdf版题库为**答案页面截屏**整合   
+##### 点击下载后需要加载一会，请耐心等待哦~   """)
 hide_st_style = """
             <style>
             #MainMenu {visibility: hidden;}
@@ -214,4 +255,3 @@ hide_st_style = """
             """
 
 st.markdown(hide_st_style, unsafe_allow_html=True)
-
