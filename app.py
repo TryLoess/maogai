@@ -52,6 +52,7 @@ with st.sidebar:
 # 定义加载新题目的函数
 def load_new_question(random_mode=True):
     if random_mode:
+        print(data)
         random_id = random.choice(data["题号"].unique())  # 随机选择一个题号
     else:
         # 用于“选看某题”模式，按顺序或特定逻辑加载题目
