@@ -200,3 +200,13 @@ elif selected_page == "错题集":
     else:
         st.info("您的错题集目前为空。")
 
+hide_st_style = """
+            <style>
+            #MainMenu {visibility: hidden;}
+            footer {visibility: hidden;}
+            header {visibility: hidden;}
+            <![]()yle>
+            """
+
+st.markdown(hide_st_style, unsafe_allow_html=True)
+
