@@ -103,7 +103,7 @@ def display_question():
         # 下一题按钮
         if st.button("下一题"):
             load_new_question(random_mode=(selected_page == "随机题目"))
-            st.experimental_rerun()
+            st.rerun()
     else:
         st.info("点击上方的按钮来加载一个题目。")
 
@@ -136,7 +136,7 @@ if selected_page == "随机题目":
     col1, _ = st.columns([1, 1])
     if col1.button("开始随机~"):
         load_new_question(random_mode=True)
-        st.experimental_rerun()
+        st.rerun()
     display_question()
 
 elif selected_page == "选看某题":
@@ -152,7 +152,7 @@ elif selected_page == "选看某题":
         st.session_state["search_query"] = temp_query
     if st.button("查看题目"):
         load_new_question(random_mode=False)
-        st.experimental_rerun()
+        st.rerun()
     display_question()
 
 elif selected_page == "错题集":
