@@ -51,8 +51,10 @@ with st.sidebar:
 
 
 
-    st.markdown("---\n**祝各位毛概选择都全对！！！**   \n- 觉得好可以到[github](https://github.com/TryLoess/maogai)上给我点个小星星哇~    \n- 有bug或者建议可以到github提issue或者发邮件到2624680754@qq.com   \n")
-
+    st.markdown("---\n##### 祝各位毛概选择都全对！！！   \n- 觉得好可以到[github](https://github.com/TryLoess/maogai)上给我点个小星星哇~    \n- 有bug或者建议可以到github提issue或者发邮件到2624680754@qq.com   \n")
+    st.markdown("""---\n ##### 现已加入豪华下载套餐   
+- 题库两种下载
+- 错题集导出""")
 
 # 定义加载新题目的函数
 def load_new_question(random_mode=True):
