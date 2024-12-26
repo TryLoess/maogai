@@ -73,7 +73,7 @@ def display_question():
         current_question = st.session_state.current_question
 
         # 显示题目和难度
-        st.markdown(f"""##### {current_question["题号"]}:{current_question['题目']}""")
+        st.markdown(f"""#### {current_question["题号"]}:{current_question['题目']}""")
 
         # 构建选项列表
         options = [f"{chr(65 + i)}. {opt}" if opt[1] != "." else opt for i, opt in enumerate(current_question["选项"])]
