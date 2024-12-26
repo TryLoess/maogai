@@ -1,3 +1,5 @@
+import os
+
 import pandas as pd
 from docx import Document
 
@@ -14,7 +16,9 @@ def add_to_docx(data, doc):
 
     # 写入正确答案
     doc.add_paragraph(f"正确答案：{data['正确答案']}")
-
-data = pd.read_json(r"E:\python\建模\web_try\tiku.json")
+    
+    
+script_dir = os.path.dirname(os.path.abspath(__file__))
+data = pd.read_json(os.path.join(script_dir, "tiku.json"))
 data.apply(lambda x: add_to_docx(x, doc), axis=1)
 doc.save("output.docx")
