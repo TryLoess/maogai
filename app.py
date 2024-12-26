@@ -8,7 +8,7 @@ script_dir = os.path.dirname(os.path.abspath(__file__))
 
 # 加载数据
 data = pd.read_json(os.path.join(script_dir, "tiku.json"))
-worse_list = pd.read_csv(os.path.join(script_dir, "worse_list.csv"), encoding="gbk")
+worse_list = pd.read_csv(os.path.join(script_dir, "worse_list.csv"))
 
 # 初始化会话状态
 if "submit" not in st.session_state:
