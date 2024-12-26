@@ -2,10 +2,14 @@ import random
 import streamlit_antd_components as sac
 import streamlit as st
 import pandas as pd
+import os
+
+# 获取当前脚本的目录
+script_dir = os.path.dirname(os.path.abspath(__file__))
 
 # 加载数据
-data = pd.read_json(r"E:\python\建模\web_try\tiku.json")
-worse_list = pd.read_csv("E:\python\建模\web_try\worse_list.csv", encoding="gbk")
+data = pd.read_json(os.path.join(script_dir, "tiku.json"))
+worse_list = pd.read_csv(os.path.join(script_dir, "worse_list.csv"), encoding="gbk")
 
 # 初始化会话状态
 if "submit" not in st.session_state:
