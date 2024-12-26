@@ -9,10 +9,10 @@ script_dir = os.path.dirname(os.path.abspath(__file__))
 # 加载数据
 data = pd.read_json(os.path.join(script_dir, "tiku.json"))
 with open(os.path.join(script_dir, "worse_list.csv"), "r", encoding="gbk", errors="replace") as f:
-    data = f.read()
+    data1 = f.read()
 # 再用 Pandas 读取内容
 from io import StringIO
-worse_list = pd.read_csv(StringIO(data))
+worse_list = pd.read_csv(StringIO(data1))
 
 # 初始化会话状态
 if "submit" not in st.session_state:
