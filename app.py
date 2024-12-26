@@ -43,7 +43,7 @@ with st.sidebar:
 
 
 
-    st.markdown("---\n**基于学校给的题库**\n   有bug跟我说一下捏，我改一改")
+    st.markdown("---\n**基于学校给的题库**   \n觉得好就到github上给我点个小星星叭~   \n有bug或者建议可以到github提issue或者发邮件到2624680754@qq.com说一下捏")
 
 # 定义加载新题目的函数
 def load_new_question(random_mode=True):
@@ -73,7 +73,7 @@ def display_question():
         current_question = st.session_state.current_question
 
         # 显示题目和难度
-        st.markdown(f"""## {current_question["题号"]}:{current_question['题目']}""")
+        st.markdown(f"""##### {current_question["题号"]}:{current_question['题目']}""")
 
         # 构建选项列表
         options = [f"{chr(65 + i)}. {opt}" if opt[1] != "." else opt for i, opt in enumerate(current_question["选项"])]
