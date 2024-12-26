@@ -43,7 +43,7 @@ with st.sidebar:
 
 
 
-    st.markdown("---\n**基于学校给的题库**   \n觉得好就到github上给我点个小星星叭~   \n有bug或者建议可以到github提issue或者发邮件到2624680754@qq.com说一下捏")
+    st.markdown("---\n**祝各位毛概选择都全对！！！**   \n- 觉得好可以到github上给我点个小星星哇~    \n- 有bug或者建议可以到github提issue或者发邮件到2624680754@qq.com   \n")
 
 # 定义加载新题目的函数
 def load_new_question(random_mode=True):
