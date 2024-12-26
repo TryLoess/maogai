@@ -8,7 +8,11 @@ script_dir = os.path.dirname(os.path.abspath(__file__))
 
 # 加载数据
 data = pd.read_json(os.path.join(script_dir, "tiku.json"))
-worse_list = pd.read_csv(os.path.join(script_dir, "worse_list.csv"), encoding="gbk", errors="ignore")
+with open(os.path.join(script_dir, "worse_list.csv"), "r", encoding="gbk", errors="replace") as f:
+    data = f.read()
+# 再用 Pandas 读取内容
+from io import StringIO
+worse_list = pd.read_csv(StringIO(data))
 
 # 初始化会话状态
 if "submit" not in st.session_state:
@@ -134,8 +138,8 @@ def display_question():
             else:
                 st.error(f"回答错误！正确答案是：{current_question['正确答案']}")
                 # 提供将错题加入错题集的按钮
-                if st.button("加入错题集"):
-                    add_to_worse(current_question)
+                # if st.button("加入错题集"):
+                #     add_to_worse(current_question)
 
             # 显示答案解析
             if current_question["解析"] and current_question["解析"] != "试题解析":
