@@ -139,8 +139,8 @@ def display_question():
             else:
                 st.error(f"回答错误！正确答案是：{current_question['正确答案']}")
                 # 提供将错题加入错题集的按钮
-                # if st.button("加入错题集"):
-                #     add_to_worse(current_question)
+                if st.button("加入错题集"):
+                    add_to_worse(current_question)
 
             # 显示答案解析
             if current_question["解析"] and current_question["解析"] != "试题解析":
@@ -200,8 +200,8 @@ elif selected_page == "错题集":
     if st.session_state.worse:
         worse_df = pd.DataFrame(st.session_state.worse)
         st.dataframe(worse_df)
-        if st.button("保存错题集"):
-            worse_df.to_csv("worse_list.csv", index=False)
+        # if st.button("保存错题集"):
+        #     worse_df.to_csv("worse_list.csv", index=False)
     else:
         st.info("您的错题集目前为空。")
 
