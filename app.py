@@ -37,18 +37,14 @@ st.title("2024毛概题库选择题")
 
 # 侧边栏菜单
 with st.sidebar:
-    selected_page = sac.menu(
-        [
-            sac.MenuItem("随机题目"),
-            sac.MenuItem("选看某题"),
-            sac.MenuItem("错题集")
-        ],
-        key="selected_page",
-        open_index=0,
-    )
+    menu = ["随机题目", "选看某题", "错题集"]
 
-    sac.divider()
-    st.markdown("**基于学校给的题库**\n有bug跟我说一下捏，我改一改")
+    # 使用 st.radio，并通过标题为空字符串隐藏框框
+    selected_page = st.selectbox("在这选择页面~", menu)
+
+
+
+    st.markdown("---\n**基于学校给的题库**\n   有bug跟我说一下捏，我改一改")
 
 # 定义加载新题目的函数
 def load_new_question(random_mode=True):
