@@ -87,7 +87,7 @@ def display_question():
         st.markdown(f"""#### {current_question["题号"]}:{current_question['题目']}""")
 
         # 构建选项列表
-        options = [f"{chr(65 + i)}. {opt}" if opt[1] != "." else opt for i, opt in enumerate(current_question["选项"])]
+        options = [f"{chr(65 + i)}. {opt}" if len(opt) == 1 or opt[1] != "." else opt for i, opt in enumerate(current_question["选项"])]
 
         # 为每个题目设置唯一的键，以保存用户选择
         radio_key = f"radio_{current_question['题号']}"
