@@ -205,13 +205,11 @@ elif selected_page == "错题集":
     st.header("错题集")
     if st.session_state.worse:
         worse_df = pd.DataFrame(st.session_state.worse)
-        print("worse:", worse_df)
         st.dataframe(worse_df)
 
-        print("错题集导出")
         doc = Document()
-        worse_df["选项"] = worse_df["选项"].apply(lambda x: eval(x))
         worse_df.apply(lambda x: add_to_docx(x, doc), axis=1)
+        print(worse_df)
         buffer = BytesIO()
         doc.save(buffer)
         buffer.seek(0)  # 重置缓冲区的位置
