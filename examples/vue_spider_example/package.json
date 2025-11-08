@@ -1,0 +1,32 @@
+{
+  "name": "vue_spider_example",
+  "version": "1.0.0",
+  "description": "一个结合 Vue.js 和网页爬虫的示例项目",
+  "main": "src/spider/index.js",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "spider": "node src/spider/index.js",
+    "spider:example": "node examples/basic-example.js"
+  },
+  "keywords": [
+    "vue",
+    "spider",
+    "crawler",
+    "web-scraping",
+    "example"
+  ],
+  "author": "Your Name",
+  "license": "MIT",
+  "dependencies": {
+    "vue": "^3.3.4",
+    "axios": "^1.6.0",
+    "cheerio": "^1.0.0-rc.12"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^4.4.0",
+    "vite": "^5.0.0"
+  }
+}
